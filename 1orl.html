@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <style>    	
+		@font-face {
+			font-family: "AtkinsonHyperlegible";
+			src: url("https://lisatam.ca/fonts/Atkinson-Hyperlegible-Regular-102a.woff2");		
+		}    	
+
+      	body, button{
+        	font-family: 'Helvetica', sans-serif; 
+        	color: white;
+        	background-color: black;       
+      	}
+
+      	body, button, input{
+      		font-size:  18;
+      	}
+
+      	a {
+      		color: yellow;
+      	}
+
+	    h3{
+	        line-height: 0.5em;
+	        text-align: center;
+	    }
+
+	    div.parent{
+	        height: 100%;
+	    }
+	    
+	    div.child{
+	        position: absolute;
+	        top: 50%;
+	        transform: translateY(-50%);	
+	        width: 95%;        
+	        margin-left: auto;
+	        margin-right: auto;
+	        text-align: center;
+	      }
+
+	    #output {
+	    	font-family: AtkinsonHyperlegible;
+	    	max-width: 150px;
+	    	margin-left: auto;
+	    	margin-right: auto;
+	    	text-align: left;
+	    }
+
+	    #atkinson, #reset_btn{
+	      	max-width: 500px;
+	      	margin-left: auto;
+	      	margin-right: auto;  
+	      	font-family: AtkinsonHyperlegible;    	      	     
+	    }
+    </style>
+<body>
+
+<div class="parent">
+	<div class="child">	
+		<div id="main" style="display:block">	
+			<h3>Not sure if that's a 1 or l or I or |?</h3>
+			<p>Paste it below and find out.</p>
+		    <p><input type="text" placeholder="Confusing character(s)" id="input_box"></p>
+		    <button type="button" onclick="readText();">What is it?</button>
+		</div>
+
+	    <div id="output">      
+	    	<!--Populated by JS fn below-->  
+	    </div>
+
+	    <div id="atkinson" style="display:none;">
+	    	<p>To avoid this in the future, consider installing and using the (free!) <a href="https://brailleinstitute.org/freefont" target="blank">Atkinson Hyperlegible font</a>. It's designed for maximum legibility, especially for low-vision readers.	    		
+	    </div>
+	    <button id="reset_btn" type="button" onclick="reset();" style="display:none;">Try again</button>
+	</div>
+</div>    
+	<script>
+		function buildOutput(char_id){
+			document.getElementById("output").innerHTML += [char, ": ", char_id, '<br />'].join('');
+		}
+
+	    function readText(){
+	    	var in_text = document.getElementById("input_box").value;
+	    	document.getElementById("output").innerHTML = ['<h3>', in_text, '</h3>'].join('');
+	    	for (i = 0; i < in_text.length; i++){
+	    		char = in_text.charAt(i)	    		
+
+	    		switch(char){
+	    			case'1': 
+	    				char_id == "one";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'l': 
+	    				char_id == "lower letter L";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'|':  
+	    				char_id == "pipe";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'I':  
+	    				char_id == "upper letter i";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'0':  
+	    				char_id == "zero";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'O':  
+	    				char_id == "upper letter o";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'o':
+	    				char_id == "lower letter O";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			case'∅':
+	    				char_id == "empty set";
+	    				buildOutput(char_id);
+	    				break;
+
+	    			default:  
+	    				char_id == char;
+	    				buildOutput(char_id);
+	    		}
+	    	}
+	    	
+			atkinson.style.display = "block";
+			main.style.display = "none";
+			reset_btn.style.display = "block";
+								
+	    }
+	    function reset(){
+	    	atkinson.style.display = "none";
+			main.style.display = "block";
+			reset_btn.style.display = "none";
+				
+			document.getElementById("output").innerHTML = "&nbsp;"			
+	    }
+	</script>    
+</body>
+</html>
