@@ -86,52 +86,46 @@
 	    	for (i = 0; i < in_text.length; i++){
 	    		char = in_text.charAt(i)	    		
 
-	    		switch(char){
-	    			case'1': 
-	    				char_id == "one";
-	    				buildOutput(char_id);
-	    				break;
 
-	    			case'l': 
-	    				char_id == "lower letter L";
-	    				buildOutput(char_id);
-	    				break;
+	    function buildOutput(char_id) {
+	        document.getElementById("output").innerHTML += [char, ": ", char_id, '<br />'].join('');
+	    }
+	
+	    function readText() {
+	        var in_text = document.getElementById("input_box").value;
+	        document.getElementById("output").innerHTML = ['<h3>', in_text, '</h3>'].join('');
+	
+	        // Object key-value mapping for character identification
+	        const charMap = {
+	            '1': "one",
+	            'l': "lower letter L",
+	            '|': "pipe",
+	            'I': "upper letter i",
+	            '0': "zero",
+	            'O': "upper letter o",
+	            'o': "lower letter O",
+	            '∅': "empty set"
+	        };
+	
+	        for (let i = 0; i < in_text.length; i++) {
+	            char = in_text.charAt(i);
+	            let char_id = charMap[char] || char; // Use the mapped value or the character itself if not found
+	            buildOutput(char_id);
+	        }
+	
+	        atkinson.style.display = "block";
+	        main.style.display = "none";
+	        reset_btn.style.display = "block";
+	    }
+	
+	    function reset() {
+	        atkinson.style.display = "none";
+	        main.style.display = "block";
+	        reset_btn.style.display = "none";
+	
+	        document.getElementById("output").innerHTML = "&nbsp;";
+	    }
 
-	    			case'|':  
-	    				char_id == "pipe";
-	    				buildOutput(char_id);
-	    				break;
-
-	    			case'I':  
-	    				char_id == "upper letter i";
-	    				buildOutput(char_id);
-	    				break;
-
-	    			case'0':  
-	    				char_id == "zero";
-	    				buildOutput(char_id);
-	    				break;
-
-	    			case'O':  
-	    				char_id == "upper letter o";
-	    				buildOutput(char_id);
-	    				break;
-
-	    			case'o':
-	    				char_id == "lower letter O";
-	    				buildOutput(char_id);
-	    				break;
-
-	    			case'∅':
-	    				char_id == "empty set";
-	    				buildOutput(char_id);
-	    				break;
-
-	    			default:  
-	    				char_id == char;
-	    				buildOutput(char_id);
-	    		}
-	    	}
 	    	
 			atkinson.style.display = "block";
 			main.style.display = "none";
