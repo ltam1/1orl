@@ -1,144 +1,132 @@
 <!DOCTYPE html>
-	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-    <style>    	
-		@font-face {
-			font-family: "AtkinsonHyperlegible";
-			src: url("https://lisatam.ca/fonts/Atkinson-Hyperlegible-Regular-102a.woff2");		
-		}    	
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <style>
+        @font-face {
+            font-family: "AtkinsonHyperlegible";
+            src: url("https://lisatam.ca/fonts/Atkinson-Hyperlegible-Regular-102a.woff2");
+        }
 
-      	body, button{
-        	font-family: 'Helvetica', sans-serif; 
-        	color: white;
-        	background-color: black;       
-      	}
+        body, button {
+            font-family: 'Helvetica', sans-serif;
+            color: white;
+            background-color: black;
+        }
 
-      	body, button, input{
-      		font-size:  18;
-      	}
+        body, button, input {
+            font-size: 18px; /* Added units */
+        }
 
-      	a {
-      		color: yellow;
-      	}
+        a {
+            color: yellow;
+        }
 
-	    h3{
-	        line-height: 0.5em;
-	        text-align: center;
-	    }
+        h3 {
+            line-height: 0.5em;
+            text-align: center;
+        }
 
-	    div.parent{
-	        height: 100%;
-	    }
-	    
-	    div.child{
-	        position: absolute;
-	        top: 50%;
-	        transform: translateY(-50%);	
-	        width: 95%;        
-	        margin-left: auto;
-	        margin-right: auto;
-	        text-align: center;
-	      }
+        div.parent {
+            height: 100%;
+        }
 
-	    #output {
-	    	font-family: AtkinsonHyperlegible;
-	    	max-width: 150px;
-	    	margin-left: auto;
-	    	margin-right: auto;
-	    	text-align: left;
-	    }
+        div.child {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
 
-	    #atkinson, #reset_btn{
-	      	max-width: 500px;
-	      	margin-left: auto;
-	      	margin-right: auto;  
-	      	font-family: AtkinsonHyperlegible;    	      	     
-	    }
+        #output {
+            font-family: AtkinsonHyperlegible;
+            max-width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        #atkinson, #reset_btn {
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: AtkinsonHyperlegible;
+        }
     </style>
+</head>
 <body>
+    <div class="parent">
+        <div class="child">
+            <div id="main" style="display:block">
+                <h3>Not sure if that's a 1 or l or I or |?</h3>
+                <p>Paste it below and find out.</p>
+                <p><input type="text" placeholder="Confusing character(s)" id="input_box"></p>
+                <button type="button" onclick="readText();">What is it?</button>
+            </div>
 
-<div class="parent">
-	<div class="child">	
-		<div id="main" style="display:block">	
-			<h3>Not sure if that's a 1 or l or I or |?</h3>
-			<p>Paste it below and find out.</p>
-		    <p><input type="text" placeholder="Confusing character(s)" id="input_box"></p>
-		    <button type="button" onclick="readText();">What is it?</button>
-		</div>
+            <div id="output">
+                <!-- Populated by JS function below -->
+            </div>
 
-	    <div id="output">      
-	    	<!--Populated by JS fn below-->  
-	    </div>
+            <div id="atkinson" style="display:none;">
+                <p>To avoid this in the future, consider installing and using the (free!) <a href="https://brailleinstitute.org/freefont" target="blank">Atkinson Hyperlegible font</a>. It's designed for maximum clarity.</p>
+            </div>
+            <button id="reset_btn" type="button" onclick="reset();" style="display:none;">Try again</button>
+        </div>
+    </div>
 
-	    <div id="atkinson" style="display:none;">
-	    	<p>To avoid this in the future, consider installing and using the (free!) <a href="https://brailleinstitute.org/freefont" target="blank">Atkinson Hyperlegible font</a>. It's designed for maximum legibility, especially for low-vision readers.	    		
-	    </div>
-	    <button id="reset_btn" type="button" onclick="reset();" style="display:none;">Try again</button>
-	</div>
-</div>    
-	<script>
-		function buildOutput(char_id){
-			document.getElementById("output").innerHTML += [char, ": ", char_id, '<br />'].join('');
-		}
+    <script>
+        function buildOutput(char, char_id) {
+            document.getElementById("output").innerHTML += [char, ": ", char_id, '<br />'].join('');
+        }
 
-	    function readText(){
-	    	var in_text = document.getElementById("input_box").value;
-	    	document.getElementById("output").innerHTML = ['<h3>', in_text, '</h3>'].join('');
-	    	for (i = 0; i < in_text.length; i++){
-	    		char = in_text.charAt(i)	    		
+        function readText() {
+            const in_text = document.getElementById("input_box").value;
+            const output = document.getElementById("output");
+            const atkinson = document.getElementById("atkinson");
+            const main = document.getElementById("main");
+            const reset_btn = document.getElementById("reset_btn");
 
+            output.innerHTML = ['<h3>', in_text, '</h3>'].join('');
 
-	    function buildOutput(char_id) {
-	        document.getElementById("output").innerHTML += [char, ": ", char_id, '<br />'].join('');
-	    }
-	
-	    function readText() {
-	        var in_text = document.getElementById("input_box").value;
-	        document.getElementById("output").innerHTML = ['<h3>', in_text, '</h3>'].join('');
-	
-	        // Object key-value mapping for character identification
-	        const charMap = {
-	            '1': "one",
-	            'l': "lower letter L",
-	            '|': "pipe",
-	            'I': "upper letter i",
-	            '0': "zero",
-	            'O': "upper letter o",
-	            'o': "lower letter O",
-	            '∅': "empty set"
-	        };
-	
-	        for (let i = 0; i < in_text.length; i++) {
-	            char = in_text.charAt(i);
-	            let char_id = charMap[char] || char; // Use the mapped value or the character itself if not found
-	            buildOutput(char_id);
-	        }
-	
-	        atkinson.style.display = "block";
-	        main.style.display = "none";
-	        reset_btn.style.display = "block";
-	    }
-	
-	    function reset() {
-	        atkinson.style.display = "none";
-	        main.style.display = "block";
-	        reset_btn.style.display = "none";
-	
-	        document.getElementById("output").innerHTML = "&nbsp;";
-	    }
+            // Object key-value mapping for character identification
+            const charMap = {
+                '1': "one",
+                'l': "lower letter L",
+                '|': "pipe",
+                'I': "upper letter I",
+                '0': "zero",
+                'O': "upper letter O",
+                'o': "lower letter O",
+                '∅': "empty set"
+            };
 
-	    	
-			atkinson.style.display = "block";
-			main.style.display = "none";
-			reset_btn.style.display = "block";
-								
-	    }
-	    function reset(){
-	    	atkinson.style.display = "none";
-			main.style.display = "block";
-			reset_btn.style.display = "none";
-				
-			document.getElementById("output").innerHTML = "&nbsp;"			
-	    }
-	</script>    
+            for (let i = 0; i < in_text.length; i++) {
+                const char = in_text.charAt(i);
+                const char_id = charMap[char] || char; // Use the mapped value or the character itself if not found
+                buildOutput(char, char_id);
+            }
+
+            atkinson.style.display = "block";
+            main.style.display = "none";
+            reset_btn.style.display = "block";
+        }
+
+        function reset() {
+            const atkinson = document.getElementById("atkinson");
+            const main = document.getElementById("main");
+            const reset_btn = document.getElementById("reset_btn");
+            const output = document.getElementById("output");
+
+            atkinson.style.display = "none";
+            main.style.display = "block";
+            reset_btn.style.display = "none";
+
+            output.innerHTML = "&nbsp;";
+        }
+    </script>
 </body>
 </html>
